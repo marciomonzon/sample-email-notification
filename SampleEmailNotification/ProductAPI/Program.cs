@@ -1,8 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using API;
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+
+builder.AddServices();
+builder.AddDatabase();
+builder.AddSwaggerDocs();
+builder.AddJwtAuth();
+builder.AddScopedServices();
 
 var app = builder.Build();
 
