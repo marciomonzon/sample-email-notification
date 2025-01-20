@@ -28,7 +28,11 @@ public class ProductService : IProductService
         var product = await _productRepository.GetByIdAsync(id);
         if (product == null) return null;
 
-        return new ProductDto(product.Id, product.Name, product.Description, product.Price, product.Stock);
+        return new ProductDto(product.Id,
+                              product.Name,
+                              product.Description,
+                              product.Price,
+                              product.Stock);
     }
 
     public async Task AddAsync(ProductDto productDto)
