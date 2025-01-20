@@ -5,9 +5,9 @@ namespace ProductAPI.Data.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly DbContext _context;
+        private readonly AppDbContext _context;
 
-        public ProductRepository(DbContext context)
+        public ProductRepository(AppDbContext context)
         {
             _context = context;
         }

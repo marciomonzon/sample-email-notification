@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using ProductAPI.Data;
 using ProductAPI.Data.Repository;
 using ProductAPI.Services;
-using System.Reflection;
 
 namespace API
 {
@@ -22,21 +21,9 @@ namespace API
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Tasks App",
-                    Description = "Tasks application based on Trello and made with ASP.NET",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Exemplo de página de contato",
-                        Url = new Uri("https://example.com/contact")
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Example of license page",
-                        Url = new Uri("https://example.com/license")
-                    }
+                    Title = "Product Service",
+                    Description = "This Service is part of the Sample Email Notification Project",
                 });
-                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
             });
         }
 
