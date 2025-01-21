@@ -1,15 +1,19 @@
-﻿using ProductAPI.Data.Repository;
+﻿using MassTransit;
+using ProductAPI.Data.Repository;
 using ProductAPI.DTO;
+using ProductAPI.Messages;
 using ProductAPI.Models;
 using ProductAPI.Services;
 
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IPublishEndpoint _publisher;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, IPublishEndpoint publisher)
     {
         _productRepository = productRepository;
+        _publisher = publisher;
     }
 
     public async Task<List<ProductDto>> GetAllAsync()
@@ -47,6 +51,19 @@ public class ProductService : IProductService
         };
 
         await _productRepository.AddAsync(product);
+
+
+        var productAddedMessage = new ProductAddedMessage
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Stock = product.Stock,
+            Date = DateTime.Now
+        };
+
+        await _publisher.Publish(productAddedMessage);
     }
 
     public async Task UpdateAsync(int id, ProductDto productDto)

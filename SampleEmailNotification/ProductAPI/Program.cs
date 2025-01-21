@@ -8,6 +8,7 @@ builder.AddDatabase();
 builder.AddSwaggerDocs();
 builder.AddJwtAuth();
 builder.AddScopedServices();
+builder.AddRabbitMq();
 
 var app = builder.Build();
 

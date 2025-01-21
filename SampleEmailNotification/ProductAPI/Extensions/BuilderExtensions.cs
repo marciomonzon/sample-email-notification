@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ProductAPI.Data;
 using ProductAPI.Data.Repository;
@@ -43,6 +44,23 @@ namespace API
             builder.Services.AddScoped<IProductService, ProductService>();
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        }
+
+        public static void AddRabbitMq(this WebApplicationBuilder builder)
+        {
+            var configuration = builder.Configuration;
+
+            builder.Services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(configuration.GetValue<string>("RabbitMQ:Host"), h =>
+                    {
+                        h.Username(configuration.GetValue<string>("RabbitMQ:Username")!);
+                        h.Password(configuration.GetValue<string>("RabbitMQ:Password")!);
+                    });
+                });
+            });
         }
     }
 }
